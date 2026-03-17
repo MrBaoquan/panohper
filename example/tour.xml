@@ -1,0 +1,84 @@
+<krpano version="1.20.11" title="panohper Example Tour">
+
+	<!-- ========================================================== -->
+	<!--  panohper 组件引入（顺序：utils → popup → videoplayer → tips）  -->
+	<!-- ========================================================== -->
+	<include url="panohper/utils.xml" />
+	<include url="panohper/popup.xml"/>
+	<include url="panohper/videoplayer.xml"/>
+	<include url="panohper/tips.xml"/>
+
+	<!-- ========================================================== -->
+	<!--  示例场景                                                     -->
+	<!-- ========================================================== -->
+	<scene name="scene_demo" title="Demo Scene" onstart="" thumburl="" lat="" lng="" heading="">
+
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<!-- ===== 示例 1：横向展板弹窗 ===== -->
+		<hotspot name="info_board"
+			url="assets/animate/DJQQ.png"
+			onloaded="do_crop_animation(64,64, 60);"
+			ath="10.0" atv="-5.0"
+			onclick="popup('p1', 'assets/hall/ZB-ZQ01.jpg', 'h');"
+		/>
+
+		<!-- ===== 示例 2：纵向图文弹窗 ===== -->
+		<hotspot name="info_detail"
+			url="assets/animate/DJQQ.png"
+			onloaded="do_crop_animation(64,64, 60);"
+			ath="60.0" atv="-5.0"
+			onclick="popup('p2', 'assets/hall/XQ-ZQ01-QY01.jpg', 'v');"
+		/>
+
+		<!-- ===== 示例 3：视频热点 ===== -->
+		<hotspot name="video_spot"
+			url="assets/animate/SPTB.png"
+			onloaded="do_crop_animation(64,64, 60);"
+			ath="30.0" atv="-8.0"
+			scale="0.5"
+			onclick="playvideo(get(videourl), get(posterurl)); tween(alpha,0.0);"
+			onvideoclosed="tween(alpha,1.0);"
+			videourl="assets/videos/dpche.mp4"
+			posterurl=""
+		/>
+
+		<!-- ===== 示例 4：文字标签热点 ===== -->
+		<hotspot name="text_label"
+			type="text"
+			ath="-30.0" atv="-8.0"
+			html="&lt;b&gt;说明标注&lt;/b&gt;&lt;br/&gt;点击查看详情"
+			css="color:#FFFFFF; font-size:14px; text-align:center;"
+			bg="true" bgcolor="0x2D3E50" bgalpha="0.8" bgroundedge="6"
+			padding="8"
+			scale="1.0" zoom="false" distorted="false"
+			onclick="popup('p3', 'assets/hall/XQ-ZQ01-QY01.jpg', 'v');"
+		/>
+
+		<!-- ===== 示例 5：展板 + 子热点叠加 ===== -->
+		<hotspot name="board_with_spots"
+			url="assets/animate/DJQQ.png"
+			onloaded="do_crop_animation(64,64, 60);"
+			ath="-60.0" atv="-5.0"
+			onclick="popup('p4', 'assets/hall/ZB-ZQ01.jpg', 'h');"
+			onpopuped="set(global.layer[c_spots],parent='scrollarea#p4',visible=true);"
+		/>
+		<layer name="c_spots" type="container" width="100%" height="100%"
+			visible="false" bgcolor="0x00ff00" bgalpha="0.0">
+			<layer name="ca1" type="container" bgalpha="0.0"
+				x="calc:(300*100/1000)+'%'" y="calc:(120*100/500)+'%'"
+				width="calc:(200*100/1000)+'%'" height="100"
+				align="leftop" bgcapture="true"
+				onclick="callwith(layer[ca1_icon],onclick)">
+				<layer name="ca1_icon"
+					url="assets/animate/Xsdj.png"
+					onloaded="do_crop_animation(64,64, 60);"
+					edge="lefttop" align="right"
+					onclick="popup('p5', 'assets/hall/XQ-ZQ01-QY01.jpg', 'v');"
+				/>
+			</layer>
+		</layer>
+
+	</scene>
+
+</krpano>
