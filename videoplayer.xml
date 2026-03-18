@@ -33,7 +33,7 @@ visible=true
 
 addlayer(get(loadingid),loading);
 set(loading,
-url="assets/common/loadinganimation.png",
+url="%XMLPATH%assets/common/loadinganimation.png",
 visible=true,
 align=center,
 parent=get(videobgid),
@@ -80,7 +80,7 @@ copy(videoouter,global.layer[get(videoouterid)]);
 addlayer(get(videoid),video);
 set(video,
 parent=get(videoareaid),
-url="plugins/videoplayer.js",
+url="%XMLPATH%plugins/videoplayer.js",
 scalechildren=true,
 zorder=95,
 align=center,
@@ -101,7 +101,7 @@ addlayer(get(btncloseid),btnclose);
 set(btnclose,
 parent=get(videobgid),
 type=image,
-url='assets/ui/Gb01.png',
+url='%XMLPATH%assets/ui/Gb01.png',
 onclick="closevideo();",
 align=righttop,
 x=10,
@@ -114,7 +114,7 @@ addlayer(get(btnplayid),btnplay);
 set(btnplay,
 parent=get(videoid),
 type=image,
-url='assets/ui/BF.png',
+url='%XMLPATH%assets/ui/BF.png',
 visible=false,
 align=center,
 onclick="tween(alpha,0); vp_handle_playvideo(); set(visible,false);"

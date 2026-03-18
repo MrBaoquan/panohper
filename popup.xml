@@ -39,7 +39,7 @@ visible=true,
 
 addlayer(get(loadingid), loading);
 set(loading,
-url="assets/common/loadinganimation.png",
+url="%XMLPATH%assets/common/loadinganimation.png",
 visible=true,
 align=center,
 parent=get(popupid),
@@ -70,7 +70,7 @@ parentmaskchildren=true
 
 addplugin(get(scrollareaid),scrollarea);
 set(scrollarea,
-url="plugins/scrollarea.js",
+url="%XMLPATH%plugins/scrollarea.js",
 parent=get(popupviewid),
 direction=h,
 draggable=true,
@@ -101,7 +101,7 @@ addlayer(get(btncloseid), btnclose);
 set(btnclose,
 type=image,
 parent=get(popupviewid),
-url='assets/ui/Gb01.png',
+url='%XMLPATH%assets/ui/Gb01.png',
 align=righttop,
 y=15,
 x=10,
