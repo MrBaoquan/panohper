@@ -1,4 +1,4 @@
-<krpano>
+﻿<krpano>
 
 <action name="playvideo" args="videourl, posterurl" scope="private:VIDEO">
 set(pid, "vp");
@@ -33,7 +33,7 @@ visible=true
 
 addlayer(get(loadingid),loading);
 set(loading,
-url="%BASEDIR%/assets/common/loadinganimation.png",
+url="assets/common/loadinganimation.png",
 visible=true,
 align=center,
 parent=get(videobgid),
@@ -80,7 +80,7 @@ copy(videoouter,global.layer[get(videoouterid)]);
 addlayer(get(videoid),video);
 set(video,
 parent=get(videoareaid),
-url="%BASEDIR%/plugins/videoplayer.js",
+url="plugins/videoplayer.js",
 scalechildren=true,
 zorder=95,
 align=center,
@@ -101,7 +101,7 @@ addlayer(get(btncloseid),btnclose);
 set(btnclose,
 parent=get(videobgid),
 type=image,
-url='%BASEDIR%/assets/ui/Gb01.png',
+url='assets/ui/Gb01.png',
 onclick="closevideo();",
 align=righttop,
 x=10,
@@ -114,7 +114,7 @@ addlayer(get(btnplayid),btnplay);
 set(btnplay,
 parent=get(videoid),
 type=image,
-url='%BASEDIR%/assets/ui/BF.png',
+url='assets/ui/BF.png',
 visible=false,
 align=center,
 onclick="tween(alpha,0); vp_handle_playvideo(); set(visible,false);"

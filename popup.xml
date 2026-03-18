@@ -1,7 +1,7 @@
-<krpano>
+﻿<krpano>
 
 <plugin name="pp_blur" devices="html5" keep="true"
-url="%BASEDIR%/plugins/pp_blur.js"
+url="plugins/pp_blur.js"
 enabled="true"
 range="0.0"
 quality="10"
@@ -39,7 +39,7 @@ visible=true,
 
 addlayer(get(loadingid), loading);
 set(loading,
-url="%BASEDIR%/assets/common/loadinganimation.png",
+url="assets/common/loadinganimation.png",
 visible=true,
 align=center,
 parent=get(popupid),
@@ -70,7 +70,7 @@ parentmaskchildren=true
 
 addplugin(get(scrollareaid),scrollarea);
 set(scrollarea,
-url="%BASEDIR%/plugins/scrollarea.js",
+url="plugins/scrollarea.js",
 parent=get(popupviewid),
 direction=h,
 draggable=true,
@@ -101,7 +101,7 @@ addlayer(get(btncloseid), btnclose);
 set(btnclose,
 type=image,
 parent=get(popupviewid),
-url='%BASEDIR%/assets/ui/Gb01.png',
+url='assets/ui/Gb01.png',
 align=righttop,
 y=15,
 x=10,

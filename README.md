@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🌐 panohper
+# panohper
 
 **krpano 全景交互组件库**
 
-轻量 · 开箱即用 · 无侵入
+轻量 · 自包含 · 即插即用
 
 [![krpano](https://img.shields.io/badge/krpano-v1.20.x-blue?style=flat-square)](https://krpano.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
@@ -15,7 +15,7 @@
 
 panohper（**pano** + **h**ot**p**oint + help**er**）是一组适用于 [krpano](https://krpano.com) v1.20.x 的通用全景交互组件，封装了 **图文弹窗**、**视频播放器**、**滑动提示** 及 **精灵动画** 等展览场景中高频使用的功能。
 
-只需在 `tour.xml` 中 `<include>` 引入，配合简短的 `onclick` 即可工作——无需修改 skin 或 krpano 内核。
+**自包含设计** — 组件 XML、插件 JS、图标资源全部封装在同一目录内，通过 git submodule 嵌入项目即可使用，开发项目与沉淀组件同步进行。
 
 ## ✨ 特性
 
@@ -26,27 +26,86 @@ panohper（**pano** + **h**ot**p**oint + help**er**）是一组适用于 [krpano
 | 💡 **滑动提示** | 图片超出可视区自动提示 "可上下/左右滑动查看"，3 s 后淡出 |
 | 🎞️ **精灵动画** | 通用精灵图帧动画引擎，用于热点图标、加载指示器等 |
 | 🔒 **无侵入** | 全部 action 使用 `scope="private:*"` 私有作用域，不污染全局命名空间 |
+| 📦 **自包含** | XML + JS 插件 + 图标资源一个目录搞定，submodule 即插即用 |
+
+## 📂 目录结构
+
+```
+panohper/                     ← git submodule，克隆到 vtour/panohper/
+├── popup.xml                 # 图文弹窗组件
+├── videoplayer.xml           # 视频播放器组件
+├── tips.xml                  # 滑动提示组件
+├── utils.xml                 # 精灵动画 & 工具
+├── assets/                   # 组件内置资源（图标/按钮/加载动画）
+│   ├── animate/
+│   │   ├── DJQQ.png          #   图文热点图标（精灵图）
+│   │   ├── Xsdj.png          #   子热点图标
+│   │   └── SPTB.png          #   视频热点图标
+│   ├── common/
+│   │   └── loadinganimation.png
+│   └── ui/
+│       ├── Gb01.png           #   关闭按钮
+│       └── BF.png             #   播放按钮 (iOS)
+├── plugins/                   # 依赖的 krpano 插件
+│   ├── pp_blur.js             #   背景高斯模糊
+│   ├── scrollarea.js          #   可滚动区域
+│   └── videoplayer.js         #   视频播放
+├── example/                   # 使用示例
+│   ├── tour.xml
+│   └── assets/
+├── README.md
+└── LICENSE
+```
 
 ## 📦 安装
 
-### 方式 A — 直接复制
-
-将以下目录复制到你的 krpano 项目 `vtour/` 下：
-
-```
-vtour/
-├── panohper/          ← 复制 src/ 目录并重命名为 panohper/
-├── assets/            ← 复制 assets/ 目录
-└── plugins/           ← 复制 plugins/ 目录（或合并到已有 plugins）
-```
-
-### 方式 B — Git Submodule
+### 推荐：Git Submodule（开发与沉淀同步）
 
 ```bash
 cd your-project/vtour
-git submodule add https://github.com/YOUR_USERNAME/panohper.git panohper-repo
-# 然后建立符号链接或在构建脚本中复制文件
+git submodule add https://github.com/MrBaoquan/panohper.git panohper
 ```
+
+项目结构变为：
+
+```
+vtour/
+├── tour.xml
+├── panohper/          ← git submodule（panohper 仓库）
+│   ├── popup.xml
+│   ├── assets/
+│   ├── plugins/
+│   └── ...
+├── assets/            ← 项目自己的素材（展板图、视频等）
+├── plugins/           ← 项目自己的插件（gyro、webvr 等）
+├── skin/
+└── panos/
+```
+
+**开发工作流：**
+
+```bash
+# 在项目中修改 panohper 组件
+vim vtour/panohper/popup.xml
+
+# 提交 panohper 改动
+cd vtour/panohper
+git add -A && git commit -m "fix: ..."
+git push
+
+# 回到项目提交 submodule 指针更新
+cd ../..
+git add vtour/panohper
+git commit -m "chore: update panohper"
+
+# 其他项目拉取最新 panohper
+cd other-project/vtour/panohper
+git pull origin main
+```
+
+### 替代：直接复制
+
+将仓库内容复制到 `vtour/panohper/` 即可。
 
 ## 🚀 快速开始
 
@@ -66,12 +125,12 @@ git submodule add https://github.com/YOUR_USERNAME/panohper.git panohper-repo
 
 > ⚠️ **加载顺序**：`utils.xml` 必须在 `popup.xml` / `videoplayer.xml` **之前**引入。
 
-然后在任意 `<scene>` 中添加热点：
+然后在 `<scene>` 中添加热点：
 
 ```xml
 <!-- 图文弹窗热点 -->
 <hotspot name="my_board"
-    url="assets/animate/DJQQ.png"
+    url="panohper/assets/animate/DJQQ.png"
     onloaded="do_crop_animation(64,64,60);"
     ath="10" atv="-5"
     onclick="popup('p1', 'assets/hall/exhibit.jpg', 'h');"
@@ -79,7 +138,7 @@ git submodule add https://github.com/YOUR_USERNAME/panohper.git panohper-repo
 
 <!-- 视频热点 -->
 <hotspot name="my_video"
-    url="assets/animate/SPTB.png"
+    url="panohper/assets/animate/SPTB.png"
     onloaded="do_crop_animation(64,64,60);"
     ath="30" atv="-8" scale="0.5"
     onclick="playvideo(get(videourl), get(posterurl)); tween(alpha,0);"
@@ -89,38 +148,11 @@ git submodule add https://github.com/YOUR_USERNAME/panohper.git panohper-repo
 />
 ```
 
+> **路径约定**：
+> - 热点图标 `url` → `panohper/assets/animate/XXX.png`（组件内置资源）
+> - 弹窗内容图 / 视频 → `assets/XXX`（项目自身素材）
+
 完整示例见 [`example/tour.xml`](example/tour.xml)。
-
-## 📂 目录结构
-
-```
-panohper/
-├── src/                        # 核心组件 XML
-│   ├── popup.xml               #   图文弹窗
-│   ├── videoplayer.xml         #   视频播放器
-│   ├── tips.xml                #   滑动提示
-│   └── utils.xml               #   精灵动画 & 工具
-├── assets/                     # 必需资源
-│   ├── animate/                #   热点动画精灵图
-│   │   ├── DJQQ.png            #     图文热点图标
-│   │   ├── Xsdj.png            #     子热点图标
-│   │   └── SPTB.png            #     视频热点图标
-│   ├── common/
-│   │   └── loadinganimation.png #    加载动画
-│   └── ui/
-│       ├── Gb01.png            #     关闭按钮
-│       └── BF.png              #     播放按钮 (iOS)
-├── plugins/                    # 依赖的 krpano 插件
-│   ├── pp_blur.js              #   背景高斯模糊
-│   ├── scrollarea.js           #   可滚动区域
-│   └── videoplayer.js          #   视频播放
-├── example/                    # 使用示例
-│   ├── tour.xml                #   示例 tour 配置
-│   └── assets/                 #   示例素材
-├── README.md
-├── LICENSE
-└── .gitignore
-```
 
 ## 📖 API 参考
 
@@ -134,10 +166,10 @@ popup_close()
 | 参数 | 类型 | 说明 |
 |------|------|------|
 | `pid` | string | 弹窗实例 ID，同 ID 复用图层 |
-| `image_url` | string | 图片路径 |
+| `image_url` | string | 图片路径（相对于 tour 根目录） |
 | `scroll_dir` | `'h'` \| `'v'` | 横向 / 纵向滚动 |
 
-**回调**：在调用热点上设置 `onpopuped`（图片展示后）、`onpopupclosed`（关闭后）。
+**回调**：`onpopuped`（图片展示后）、`onpopupclosed`（关闭后）
 
 ---
 
@@ -153,20 +185,16 @@ closevideo()
 | `videourl` | string | 视频路径 |
 | `posterurl` | string | 封面图路径（可留空 `""`） |
 
-**回调**：在调用热点上设置 `onvideoclosed`（播放器关闭后）。
+**回调**：`onvideoclosed`（播放器关闭后）
 
 ---
 
 ### `tips.xml` — 滑动提示
 
 ```
-showtip(tip_id)
+showtip(tip_id)     // 'h' 或 'v'
 hidetip()
 ```
-
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `tip_id` | `'h'` \| `'v'` | 左右 / 上下滑动提示 |
 
 > `popup.xml` 内部会自动调用，通常无需手动使用。
 
@@ -179,22 +207,13 @@ do_crop_animation(framewidth, frameheight, framerate)
 play_animation(framewidth, frameheight, framerate, loop)
 ```
 
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `framewidth` | number | 单帧宽度 (px) |
-| `frameheight` | number | 单帧高度 (px) |
-| `framerate` | number | 帧率 (fps) |
-| `loop` | boolean | 是否循环 |
-
 ## 🧩 进阶用法
 
 ### 展板 + 子热点叠加
 
-在展板弹窗内的特定位置叠加可点击的子热点：
-
 ```xml
 <hotspot name="board"
-    url="assets/animate/DJQQ.png"
+    url="panohper/assets/animate/DJQQ.png"
     onloaded="do_crop_animation(64,64,60);"
     ath="-45" atv="-5"
     onclick="popup('p1', 'assets/hall/exhibit.jpg', 'h');"
@@ -209,7 +228,7 @@ play_animation(framewidth, frameheight, framerate, loop)
         align="leftop" bgcapture="true"
         onclick="callwith(layer[spot_a_icon],onclick)">
         <layer name="spot_a_icon"
-            url="assets/animate/Xsdj.png"
+            url="panohper/assets/animate/Xsdj.png"
             onloaded="do_crop_animation(64,64,60);"
             edge="lefttop" align="right"
             onclick="popup('p2', 'assets/hall/detail.jpg', 'v');"
@@ -218,19 +237,16 @@ play_animation(framewidth, frameheight, framerate, loop)
 </layer>
 ```
 
-**原理**：`onpopuped` 回调将子热点层的 `parent` 设为滚动区域 `'scrollarea#p1'`，使子热点随展板图同步滚动。坐标使用 `calc:(px*100/total)+'%'` 百分比定位。
-
 ### 文字标签热点
 
 ```xml
 <hotspot name="label"
-    type="text"
-    ath="200" atv="-8"
-    html="&lt;b&gt;标题&lt;/b&gt;&lt;br/&gt;描述文字"
+    type="text" ath="200" atv="-8"
+    html="&lt;b&gt;标题&lt;/b&gt;&lt;br/&gt;描述"
     css="color:#FFF; font-size:14px; text-align:center;"
     bg="true" bgcolor="0x2D3E50" bgalpha="0.8" bgroundedge="6"
     padding="8" zoom="false" distorted="false"
-    onclick="popup('p1', 'path/to/detail.jpg', 'v');"
+    onclick="popup('p1', 'assets/hall/detail.jpg', 'v');"
 />
 ```
 
@@ -239,65 +255,38 @@ play_animation(framewidth, frameheight, framerate, loop)
 <details>
 <summary><b>1. <code>&lt;action&gt;</code> 内禁止 XML 注释</b></summary>
 
-krpano 将 `<action>` 内容当作脚本处理，写 `<!-- -->` 会导致解析失败：
-
-```xml
-<!-- ✅ 正确 — 注释在 action 外部 -->
-<action name="my_action">
-    tween(alpha, 0);
-</action>
-
-<!-- ❌ 错误 — 注释在 action 内部 -->
-<action name="my_action">
-    <!-- 这会报错 -->
-    tween(alpha, 0);
-</action>
-```
+krpano 将 `<action>` 内容当作脚本处理，写 `<!-- -->` 会导致解析失败。
 </details>
 
 <details>
-<summary><b>2. 条件用 <code>EQ</code> / <code>GT</code> / <code>LT</code>，不用 <code>==</code> / <code>></code> / <code><</code></b></summary>
+<summary><b>2. 条件用 <code>EQ</code> / <code>GT</code> / <code>LT</code></b></summary>
 
 ```
 ✅ if(get(x) EQ null, ...);
-✅ if(stagewidth GT 600, ...);
 ❌ if(get(x) == null, ...);
 ```
 </details>
 
 <details>
-<summary><b>3. include 文件中 URL 需加 <code>%BASEDIR%/</code></b></summary>
-
-被 include 的 XML 中，相对路径基于该文件自身目录。加 `%BASEDIR%/` 始终相对于 tour 根目录：
-
-```xml
-url="%BASEDIR%/plugins/pp_blur.js"   ✅
-url="plugins/pp_blur.js"            ❌ → 404
-```
-</details>
-
-<details>
-<summary><b>4. 私有作用域中访问全局 layer 用 <code>global.layer[name]</code></b></summary>
+<summary><b>3. 私有作用域中用 <code>global.layer[name]</code></b></summary>
 
 ```
 ✅ tween(global.layer[h_tip].alpha, 1.0);
-❌ tween(layer[h_tip].alpha, 1.0);    → 找不到
+❌ tween(layer[h_tip].alpha, 1.0);
 ```
 </details>
 
 <details>
-<summary><b>5. 隐藏 text layer 用 <code>alpha</code> 不用 <code>scale</code></b></summary>
+<summary><b>4. 隐藏 text layer 用 <code>alpha</code> 不用 <code>scale</code></b></summary>
 
 ```
 ✅ set(global.layer[tip].alpha, 0);
-❌ set(global.layer[tip].scale, 0);   → 仍可点击
+❌ set(global.layer[tip].scale, 0);
 ```
 </details>
 
 <details>
-<summary><b>6. HTML 实体用数字引用</b></summary>
-
-krpano XML 不支持 `&times;` 等命名实体：
+<summary><b>5. HTML 实体用 XML 数字引用</b></summary>
 
 ```
 ✅ &#215;   &#160;
@@ -306,9 +295,9 @@ krpano XML 不支持 `&times;` 等命名实体：
 </details>
 
 <details>
-<summary><b>7. <code>pp_blur</code> 插件不要重复声明</b></summary>
+<summary><b>6. <code>pp_blur</code> 插件已由 popup.xml 声明，不要重复声明</b></summary>
 
-`popup.xml` 已声明 `pp_blur` 插件实例，`videoplayer.xml` 共享使用，**不要**在其他 XML 中再次声明同名 plugin。
+`videoplayer.xml` 共享同一实例，无需额外 `<plugin>`。
 </details>
 
 ## 🤝 贡献
