@@ -1,5 +1,9 @@
 ﻿<krpano>
 
+<action name="panohper_video_init" autorun="preinit">
+if(panohper_base == null, set(panohper_base, ''));
+</action>
+
 <action name="playvideo" args="videourl, posterurl" scope="private:VIDEO">
 set(pid, "vp");
 def(randomid,string,get(pid));
@@ -32,8 +36,9 @@ visible=true
 );
 
 addlayer(get(loadingid),loading);
+txtadd(loading_url, get(global.panohper_base), 'assets/common/loadinganimation.png');
 set(loading,
-url="%XMLPATH%assets/common/loadinganimation.png",
+url=get(loading_url),
 visible=true,
 align=center,
 parent=get(videobgid),
@@ -78,9 +83,10 @@ copy(videoouter,global.layer[get(videoouterid)]);
 );
 
 addlayer(get(videoid),video);
+txtadd(video_url, get(global.panohper_base), 'plugins/videoplayer.js');
 set(video,
 parent=get(videoareaid),
-url="%XMLPATH%plugins/videoplayer.js",
+url=get(video_url),
 scalechildren=true,
 zorder=95,
 align=center,
@@ -98,10 +104,11 @@ onvideocomplete="vp_handle_video_closed();"
 );
 
 addlayer(get(btncloseid),btnclose);
+txtadd(btnclose_url, get(global.panohper_base), 'assets/ui/Gb01.png');
 set(btnclose,
 parent=get(videobgid),
 type=image,
-url='%XMLPATH%assets/ui/Gb01.png',
+url=get(btnclose_url),
 onclick="closevideo();",
 align=righttop,
 x=10,
@@ -111,10 +118,11 @@ scale=0.45
 );
 
 addlayer(get(btnplayid),btnplay);
+txtadd(btnplay_url, get(global.panohper_base), 'assets/ui/BF.png');
 set(btnplay,
 parent=get(videoid),
 type=image,
-url='%XMLPATH%assets/ui/BF.png',
+url=get(btnplay_url),
 visible=false,
 align=center,
 onclick="tween(alpha,0); vp_handle_playvideo(); set(visible,false);"

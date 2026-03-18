@@ -10,6 +10,10 @@ mirroredges="false"
 order="1"
 />
 
+<action name="panohper_popup_init" autorun="preinit">
+if(panohper_base == null, set(panohper_base, ''));
+</action>
+
 <action name="popup" scope="private:POPUP" args="pid,image_url,scroll_dir">
 def(randomid,string,get(pid));
 
@@ -38,8 +42,9 @@ visible=true,
 );
 
 addlayer(get(loadingid), loading);
+txtadd(loading_url, get(global.panohper_base), 'assets/common/loadinganimation.png');
 set(loading,
-url="%XMLPATH%assets/common/loadinganimation.png",
+url=get(loading_url),
 visible=true,
 align=center,
 parent=get(popupid),
@@ -69,8 +74,9 @@ parentmaskchildren=true
 );
 
 addplugin(get(scrollareaid),scrollarea);
+txtadd(scrollarea_url, get(global.panohper_base), 'plugins/scrollarea.js');
 set(scrollarea,
-url="%XMLPATH%plugins/scrollarea.js",
+url=get(scrollarea_url),
 parent=get(popupviewid),
 direction=h,
 draggable=true,
@@ -98,10 +104,11 @@ onloaded="onimageloaded();"
 );
 
 addlayer(get(btncloseid), btnclose);
+txtadd(btnclose_url, get(global.panohper_base), 'assets/ui/Gb01.png');
 set(btnclose,
 type=image,
 parent=get(popupviewid),
-url='%XMLPATH%assets/ui/Gb01.png',
+url=get(btnclose_url),
 align=righttop,
 y=15,
 x=10,
