@@ -36,11 +36,14 @@ panohper/                     ← git submodule，克隆到 vtour/panohper/
 ├── videoplayer.xml           # 视频播放器组件
 ├── tips.xml                  # 滑动提示组件
 ├── utils.xml                 # 精灵动画 & 工具
+├── nav_styles.xml            # 导航 UI 样式覆盖（热点/缩略图/tooltip）
 ├── assets/                   # 组件内置资源（图标/按钮/加载动画）
 │   ├── animate/
 │   │   ├── DJQQ.png          #   图文热点图标（精灵图）
 │   │   ├── Xsdj.png          #   子热点图标
-│   │   └── SPTB.png          #   视频热点图标
+│   │   ├── SPTB.png          #   视频热点图标
+│   │   ├── forward.png       #   前进箭头（精灵图）
+│   │   └── 720yun/           #   720yun 风格动画精灵
 │   ├── common/
 │   │   └── loadinganimation.png
 │   └── ui/
@@ -119,11 +122,17 @@ git pull origin main
     <include url="panohper/videoplayer.xml"/>
     <include url="panohper/tips.xml"/>
 
+    <include url="skin/vtourskin.xml" />
     <!-- 你的 skin 和场景 ... -->
+
+    <!-- 导航 UI 覆盖（必须在 vtourskin.xml 之后） -->
+    <include url="panohper/nav_styles.xml" />
 </krpano>
 ```
 
-> ⚠️ **加载顺序**：`utils.xml` 必须在 `popup.xml` / `videoplayer.xml` **之前**引入。
+> ⚠️ **加载顺序**：
+> - `utils.xml` 必须在 `popup.xml` / `videoplayer.xml` **之前**引入
+> - `nav_styles.xml` 必须在 `skin/vtourskin.xml` **之后**引入（覆盖默认样式）
 
 然后在 `<scene>` 中添加热点：
 
@@ -206,6 +215,34 @@ hidetip()
 do_crop_animation(framewidth, frameheight, framerate)
 play_animation(framewidth, frameheight, framerate, loop)
 ```
+
+---
+
+### `nav_styles.xml` — 导航 UI 样式覆盖
+
+覆盖 vtourskin 默认的热点、缩略图和 tooltip 样式，提供更精致的导航体验。
+
+**覆盖的样式/行为：**
+
+| 覆盖目标 | 效果 |
+|----------|------|
+| `skin_hotspotstyle` | 热点图标改为前进箭头精灵动画（720yun 风格），悬停时半透明反馈 |
+| `skin_hotspotstyle_click` | 去掉默认的飞出 tween，直接切换场景 |
+| `skin_hotspotstyle_setup` | 加载时添加 tooltip + 永久场景名标签（读取 `scene[].title`） |
+| `skin_thumbtext_style` | 缩略图底部名称：半透明黑底，贴合底边 |
+| `skin_tooltip` | 悬停 tooltip：自适应宽度 + 圆角半透明背景 |
+
+**相关 `skin_settings` 控制项：**
+
+```xml
+<skin_settings
+    thumbs_text="true"         <!-- 缩略图底部固定名称 -->
+    tooltips_thumbs="true"     <!-- 缩略图悬停跟随标签 -->
+    tooltips_hotspots="false"  <!-- 热点悬停跟随标签（由 addlabel 替代） -->
+/>
+```
+
+> 此文件必须在 `skin/vtourskin.xml` **之后** include，否则覆盖无效。
 
 ## 🧩 进阶用法
 
