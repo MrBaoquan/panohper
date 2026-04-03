@@ -17,7 +17,7 @@
 
 <!-- ===== 示例 1：横向展板弹窗 ===== -->
 <hotspot name="info_board"
-url="panohper/assets/animate/DJQQ.png"
+url="panohper/assets/hotspots/click-bubble.png"
 onloaded="do_crop_animation(64,64, 60);"
 ath="10.0" atv="-5.0"
 onclick="popup('p1', 'example/assets/hall/ZB-ZQ01.jpg', 'h');"
@@ -25,7 +25,7 @@ onclick="popup('p1', 'example/assets/hall/ZB-ZQ01.jpg', 'h');"
 
 <!-- ===== 示例 2：纵向图文弹窗 ===== -->
 <hotspot name="info_detail"
-url="panohper/assets/animate/DJQQ.png"
+url="panohper/assets/hotspots/click-bubble.png"
 onloaded="do_crop_animation(64,64, 60);"
 ath="60.0" atv="-5.0"
 onclick="popup('p2', 'example/assets/hall/XQ-ZQ01-QY01.jpg', 'v');"
@@ -33,7 +33,7 @@ onclick="popup('p2', 'example/assets/hall/XQ-ZQ01-QY01.jpg', 'v');"
 
 <!-- ===== 示例 3：视频热点 ===== -->
 <hotspot name="video_spot"
-url="panohper/assets/animate/SPTB.png"
+url="panohper/assets/hotspots/video-play.png"
 onloaded="do_crop_animation(64,64, 60);"
 ath="30.0" atv="-8.0"
 scale="0.5"
@@ -57,7 +57,7 @@ onclick="popup('p3', 'example/assets/hall/XQ-ZQ01-QY01.jpg', 'v');"
 
 <!-- ===== 示例 5：展板 + 子热点叠加 ===== -->
 <hotspot name="board_with_spots"
-url="panohper/assets/animate/DJQQ.png"
+url="panohper/assets/hotspots/click-bubble.png"
 onloaded="do_crop_animation(64,64, 60);"
 ath="-60.0" atv="-5.0"
 onclick="popup('p4', 'example/assets/hall/ZB-ZQ01.jpg', 'h');"
@@ -71,7 +71,7 @@ width="calc:(200*100/1000)+'%'" height="100"
 align="leftop" bgcapture="true"
 onclick="callwith(layer[ca1_icon],onclick)">
 <layer name="ca1_icon"
-url="panohper/assets/animate/Xsdj.png"
+url="panohper/assets/hotspots/info-detail.png"
 onloaded="do_crop_animation(64,64, 60);"
 edge="lefttop" align="right"
 onclick="popup('p5', 'example/assets/hall/XQ-ZQ01-QY01.jpg', 'v');"

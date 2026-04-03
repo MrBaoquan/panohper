@@ -8,11 +8,11 @@
 
 	<!-- 热点样式：前进箭头序列帧动画 + 轻微透明反馈 -->
 	<style name="skin_hotspotstyle"
-	       url="%VIEWER%/panohper/assets/animate/720yun/qianjin2.png"
+	       url="%VIEWER%/panohper/assets/hotspots/arrow-advance.png"
 	       scale="0.5"
 	       distorted="false"
 	       label=""
-	       onloaded="do_crop_animation(86,86,24);"
+	       onloaded="skin_hotspotstyle_setup(); do_crop_animation(86,86,24);"
 	       onover.addevent="tween(alpha,0.8);"
 	       onout.addevent="tween(alpha,1.0);"
 	/>

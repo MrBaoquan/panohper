@@ -7,7 +7,7 @@
 
 	<!-- 默认热点样式：forward 箭头序列帧动画 -->
 	<style name="hotspot_forward"
-	       url="%VIEWER%/panohper/assets/animate/forward.png"
+	       url="%VIEWER%/panohper/assets/hotspots/arrow-forward.png"
 	       scale="0.15"
 	       onloaded="do_crop_animation(308,308,30);"
 	/>
@@ -16,12 +16,12 @@
 	    720yun 热点动画样式（仅定义 url，其他属性继承自 skin_hotspotstyle）
 	    用法: style="skin_hotspotstyle|hotspot_zuozhuan"
 	-->
-	<style name="hotspot_qianjin"   url="%VIEWER%/panohper/assets/animate/720yun/qianjin2.png" />
-	<style name="hotspot_youzhuan"  url="%VIEWER%/panohper/assets/animate/720yun/youzhuan2.png" />
-	<style name="hotspot_zuozhuan"  url="%VIEWER%/panohper/assets/animate/720yun/zuozhuan2.png" />
-	<style name="hotspot_wurenji"   url="%VIEWER%/panohper/assets/animate/720yun/wurenji.png" />
-	<style name="hotspot_spotd12"   url="%VIEWER%/panohper/assets/animate/720yun/07_new_spotd12_gif.png" />
-	<style name="hotspot_spotd6"    url="%VIEWER%/panohper/assets/animate/720yun/12_new_spotd6_gif.png" />
+	<style name="hotspot_qianjin"   url="%VIEWER%/panohper/assets/hotspots/arrow-advance.png" />
+	<style name="hotspot_youzhuan"  url="%VIEWER%/panohper/assets/hotspots/arrow-right.png" />
+	<style name="hotspot_zuozhuan"  url="%VIEWER%/panohper/assets/hotspots/arrow-left.png" />
+	<style name="hotspot_wurenji"   url="%VIEWER%/panohper/assets/hotspots/drone.png" />
+	<style name="hotspot_spotd12"   url="%VIEWER%/panohper/assets/hotspots/ring-large.png" />
+	<style name="hotspot_spotd6"    url="%VIEWER%/panohper/assets/hotspots/ring-small.png" />
 
 	<!-- 为导航热点添加永久场景名称标签 -->
 	<action name="skin_hotspotstyle_addlabel" scope="local">
