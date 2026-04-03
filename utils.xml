@@ -1,5 +1,10 @@
 <krpano>
 
+	<!-- panohper 基础路径 -->
+	<action name="set_panohper_base" autorun="preinit">
+		set(panohper_base, 'panohper/');
+	</action>
+
 	<!-- 默认热点样式：forward 箭头序列帧动画 -->
 	<style name="hotspot_forward"
 	       url="%VIEWER%/panohper/assets/animate/forward.png"
